@@ -1,0 +1,18 @@
+{
+  "name": "sky",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "bun src/yomitan/index.ts",
+    "deck": "bun src/deck.ts"
+  },
+  "dependencies": {
+    "@softsky/utils": "^1.0.5",
+    "anki-apkg-export": "^4.0.3"
+  },
+  "devDependencies": {
+    "@softsky/configs": "^1.0.8",
+    "@types/bun": "^1.1.16"
+  }
+}
