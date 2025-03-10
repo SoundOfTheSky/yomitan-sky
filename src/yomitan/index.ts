@@ -13,7 +13,7 @@ const dictionary = new YomitanDictionary({
   format: 3,
   indexUrl: 'https://raw.githubusercontent.com/SoundOfTheSky/yomitan-sky/refs/heads/main/dist/Sky.json',
   isUpdatable: true,
-  revision: '1.3.0-' + new Date().toISOString().split('T')[0],
+  revision: '1.3.1-' + new Date().toISOString().split('T')[0],
   sequenced: true,
   sourceLanguage: 'ja',
   targetLanguage: 'en',
