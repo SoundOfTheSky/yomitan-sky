@@ -86,11 +86,11 @@ export type DictionaryIndex = {
 }
 
 export type Frequency =
-  (string | number)
+  | (string | number)
   | {
-    value: number
-    displayValue?: string
-  }
+      value: number
+      displayValue?: string
+    }
 /**
  * Information used in the kanji viewer - meanings, readings, statistics, and codepoints.
  * - [0] Kanji character
@@ -133,70 +133,74 @@ export type DictionaryTagBankV3 = [string, string, number, string, number][]
  * - [1] Type of data. \"freq\" corresponds to frequency information; \"pitch\" corresponds to pitch information. \"ipa\" corresponds to IPA transcription.
  * - [2] Data for term
  */
-export type DictionaryTermMetaBankV3 =
-  ([
-    string,
-    'freq',
-    Frequency | {
-    /**
-     * Reading for the term.
-     */
-      reading: string
-      /**
-     * Frequency information for the term.
-     */
-      frequency: Frequency
-    },
-  ]
+export type DictionaryTermMetaBankV3 = (
   | [
-    string,
-    'pitch',
-    {
-    /**
-     * Reading for the term.
-     */
-      reading: string
-      /**
-     * List of different pitch accent information for the term and reading combination.
-     */
-      pitches: {
-      /**
-       * Mora position of the pitch accent downstep.
-       * A value of 0 indicates that the word does not have a downstep (heiban).
-       */
-        position: number
-        nasal?: number | number[]
-        devoice?: number | number[]
-        /**
-       * List of tags for this pitch accent.
-       */
-        tags?: string[]
-      }[]
-    },
-  ]
+      string,
+      'freq',
+      (
+        | Frequency
+        | {
+            /**
+             * Reading for the term.
+             */
+            reading: string
+            /**
+             * Frequency information for the term.
+             */
+            frequency: Frequency
+          }
+      ),
+    ]
   | [
-    string,
-    'ipa',
-    {
-    /**
-     * Reading for the term.
-     */
-      reading: string
-      /**
-     * List of different IPA transcription information for the term and reading combination.
-     */
-      transcriptions: {
-      /**
-       * IPA transcription for the term.
-       */
-        ipa: string
+      string,
+      'pitch',
+      {
         /**
-       * List of tags for this IPA transcription.
-       */
-        tags?: string[]
-      }[]
-    },
-  ])[]
+         * Reading for the term.
+         */
+        reading: string
+        /**
+         * List of different pitch accent information for the term and reading combination.
+         */
+        pitches: {
+          /**
+           * Mora position of the pitch accent downstep.
+           * A value of 0 indicates that the word does not have a downstep (heiban).
+           */
+          position: number
+          nasal?: number | number[]
+          devoice?: number | number[]
+          /**
+           * List of tags for this pitch accent.
+           */
+          tags?: string[]
+        }[]
+      },
+    ]
+  | [
+      string,
+      'ipa',
+      {
+        /**
+         * Reading for the term.
+         */
+        reading: string
+        /**
+         * List of different IPA transcription information for the term and reading combination.
+         */
+        transcriptions: {
+          /**
+           * IPA transcription for the term.
+           */
+          ipa: string
+          /**
+           * List of tags for this IPA transcription.
+           */
+          tags?: string[]
+        }[]
+      },
+    ]
+)[]
 
 /**
  * Stores dictionary readings, definitions, etc.
@@ -217,12 +221,18 @@ export type DictionaryTermBankV3 = [
   string,
   string,
   string | null,
-  string, number,
+  string,
+  number,
   Definition[],
   number,
   string,
 ][]
-export type Definition = string | DefinitionText | DefinitionContent | DefinitionImage | [string, string[]]
+export type Definition =
+  | string
+  | DefinitionText
+  | DefinitionContent
+  | DefinitionImage
+  | [string, string[]]
 export type DefinitionText = {
   type: 'text'
   text: string
@@ -234,7 +244,7 @@ export type DefinitionContent = {
 export type DefinitionImage = {
   type: 'image'
 } & Omit<StructuredContentImg, 'tag' | 'data'>
-export type StructuredContentBr = { tag: 'br', data?: StructuredContentData }
+export type StructuredContentBr = { tag: 'br'; data?: StructuredContentData }
 export type StructuredContentTable = {
   tag: 'ruby' | 'rt' | 'rp' | 'table' | 'thead' | 'tbody' | 'tfoot' | 'tr'
   content?: StructuredContent
@@ -292,7 +302,15 @@ export type StructuredContentImg = {
   /** Whether or not the image can be collapsed */
   collapsible?: boolean
   /** The vertical alignment of the image. */
-  verticalAlign?: 'baseline' | 'sub' | 'super' | 'text-top' | 'text-bottom' | 'middle' | 'top' | 'bottom'
+  verticalAlign?:
+    | 'baseline'
+    | 'sub'
+    | 'super'
+    | 'text-top'
+    | 'text-bottom'
+    | 'middle'
+    | 'top'
+    | 'bottom'
   /** Shorthand for border width, style, and color. */
   border?: string
   /** Roundness of the corners of the image's outer border edge. */
@@ -309,7 +327,7 @@ export type StructuredContentLink = {
   lang?: string
 }
 export type StructuredContent =
-  string
+  | string
   | StructuredContentBr
   | StructuredContentTable
   | StructuredContentTableCell
