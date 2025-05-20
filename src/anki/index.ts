@@ -17,3 +17,4 @@
 //   if(item.object !== 'radical') continue;
 
 // }
+console.log('anki')

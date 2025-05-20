@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "start": "bun src/yomitan/index.ts",
-    "deck": "bun src/deck.ts"
+    "deck": "bun src/deck.ts",
+    "lint": "eslint \"src/**/*{.js,.ts}\" --fix && tsc"
   },
   "dependencies": {
-    "@softsky/utils": "^1.0.5",
+    "@softsky/utils": "^2.5.3",
     "anki-apkg-export": "^4.0.3"
   },
   "devDependencies": {
-    "@softsky/configs": "^1.0.8",
-    "@types/bun": "^1.1.16"
+    "@softsky/configs": "^1.3.3",
+    "@types/bun": "^1.2.13"
   }
 }

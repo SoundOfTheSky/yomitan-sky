@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-null */
 import { mkdirSync, rmSync } from 'node:fs'
 import Path from 'node:path'
 
@@ -130,7 +129,7 @@ export class AnkiDeck {
       mod: module_,
       usn: -1,
       tags: tags
-        ? ' ' + tags.map(tag => tag.replaceAll(' ', '_')).join(' ') + ' '
+        ? ' ' + tags.map((tag) => tag.replaceAll(' ', '_')).join(' ') + ' '
         : '',
       flds: fields,
       sfld: flds[0]!,
@@ -378,22 +377,22 @@ CREATE INDEX ix_revlog_cid on revlog (cid);
 CREATE INDEX ix_revlog_usn on revlog (usn);`)
     this.db
       .prepare<
-      unknown,
-      [
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        number,
-        string,
-        string,
-        string,
-        string,
-      ]
-    >(`INSERT INTO "col" VALUES(?,?,?,?,?,?,?,?,?,?,?,'{}')`)
+        unknown,
+        [
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+          number,
+          string,
+          string,
+          string,
+          string,
+        ]
+      >(`INSERT INTO "col" VALUES(?,?,?,?,?,?,?,?,?,?,?,'{}')`)
       .run(
         1,
         (now / 1000) | 0,

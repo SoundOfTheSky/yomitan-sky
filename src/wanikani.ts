@@ -1,5 +1,7 @@
 import { write } from 'bun'
 
+import { removeWholeSentenceWithSubstring } from './utilities'
+
 export type WKResponse<T> = {
   object: string
   url: string
@@ -108,16 +110,35 @@ export async function downloadWK() {
       headers: {
         Authorization: 'Bearer ' + process.env.WK,
       },
-    }).then(x => x.json())) as WKResponse<WKAnySubject>
+    }).then((x) => x.json())) as WKResponse<WKAnySubject>
     try {
       nextUrl = json.pages.next_url
       subjects.push(...json.data)
-    }
-    catch (error) {
+    } catch (error) {
       console.error(json)
-      throw (error)
+      throw error
     }
   }
   await write('assets/WK.json', JSON.stringify(subjects, undefined, 2))
 }
 export const WK: WKObject<WKAnySubject>[] = []
+
+const unnecessary = [
+  'ou know the readings',
+  'ord is made up',
+  'his is a jukugo word',
+  'mnemonic to help',
+  'know the readings',
+  'consists of a kanji with hiragana',
+  'ends with an う',
+  'on your own',
+  "anji portion uses the kun'yomi reading",
+  'ou should be able',
+  'same as the one you learned',
+]
+
+export function cutUnnecessary(text: string) {
+  for (let index = 0; index < unnecessary.length; index++)
+    text = removeWholeSentenceWithSubstring(text, unnecessary[index]!)
+  return text
+}
